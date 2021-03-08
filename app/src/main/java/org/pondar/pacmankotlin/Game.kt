@@ -69,7 +69,7 @@ class Game(private var context: Context,view: TextView) {
 
     // Pacman Movement
     fun movePacmanLeft(pixels: Int) {
-        if (pacx + pixels + pacBitmap.width < w) {
+        if (pacx - pixels > 0) {
             pacx = pacx - pixels
             doCollisionCheck()
             gameView!!.invalidate()
@@ -86,7 +86,7 @@ class Game(private var context: Context,view: TextView) {
     }
 
     fun movePacmanUp(pixels: Int) {
-        if (pacy + pixels + pacBitmap.height < h) {
+        if (pacy - pixels > 0) {
             pacy = pacy - pixels
             doCollisionCheck()
             gameView!!.invalidate()

@@ -28,16 +28,16 @@ class MainActivity : AppCompatActivity() {
         game?.newGame()
 
         moveLeft.setOnClickListener {
-            game?.movePacmanLeft(10)
+            game?.movePacmanLeft(100)
         }
         moveRight.setOnClickListener {
-            game?.movePacmanRight(10)
+            game?.movePacmanRight(100)
         }
         moveUp.setOnClickListener {
-            game?.movePacmanUp(10)
+            game?.movePacmanUp(100)
         }
         moveDown.setOnClickListener {
-            game?.movePacmanDown(10)
+            game?.movePacmanDown(100)
         }
     }
 
