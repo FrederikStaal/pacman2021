@@ -48,8 +48,20 @@ class Game(private var context: Context,view: TextView) {
     fun initializeGoldcoins()
     {
         //DO Stuff to initialize the array list with some coins.
-
+        coins.add(GoldCoin(getRandomNumberWidth(), getRandomNumberHeight()))
+        coins.add(GoldCoin(getRandomNumberWidth(), getRandomNumberHeight()))
+        coins.add(GoldCoin(getRandomNumberWidth(), getRandomNumberHeight()))
+        coins.add(GoldCoin(getRandomNumberWidth(), getRandomNumberHeight()))
+        coins.add(GoldCoin(getRandomNumberWidth(), getRandomNumberHeight()))
         coinsInitialized = true
+    }
+
+    private fun getRandomNumberHeight(): Int {
+        return (0..h).random()
+    }
+
+    private fun getRandomNumberWidth(): Int {
+        return (0..w).random()
     }
 
 
@@ -108,7 +120,19 @@ class Game(private var context: Context,view: TextView) {
     //so you need to go through the arraylist of goldcoins and
     //check each of them for a collision with the pacman
     fun doCollisionCheck() {
+        for (GoldCoin in coins) {
+            if (!GoldCoin.taken) {
+                if (GoldCoin.coinx.toFloat() == pacx.toFloat() || GoldCoin.coiny.toFloat() == pacy.toFloat()) {
+                    points += 10
+                    GoldCoin.taken = true
+                    updateScore()
+                }
+            }
+        }
+    }
 
+    private fun updateScore() {
+        pointsView.text = "${context.resources.getString(R.string.points)} $points"
     }
 
 

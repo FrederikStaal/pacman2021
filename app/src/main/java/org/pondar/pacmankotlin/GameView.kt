@@ -56,6 +56,16 @@ class GameView : View {
                 game?.pacy!!.toFloat(), paint)
 
         //TODO loop through the list of goldcoins and draw them here
+        for (GoldCoin in game!!.coins) {
+            if (!GoldCoin.taken) {
+                val paint = Paint()
+                paint.color = Color.YELLOW
+                canvas.drawCircle(GoldCoin.coinx.toFloat(), GoldCoin.coiny.toFloat(), 30f, paint)
+            } else {
+                paint.color = Color.WHITE
+                canvas.drawCircle(GoldCoin.coinx.toFloat(), GoldCoin.coiny.toFloat(), 30f, paint)
+            }
+        }
 
         game?.doCollisionCheck()
         super.onDraw(canvas)
