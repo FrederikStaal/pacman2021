@@ -85,6 +85,7 @@ class Game(private var context: Context,view: TextView) {
         }
     }
 
+
     fun movePacmanUp(pixels: Int) {
         if (pacy - pixels > 0) {
             pacy = pacy - pixels
