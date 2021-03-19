@@ -61,6 +61,7 @@ class GameView : View {
                 val paint = Paint()
                 paint.color = Color.YELLOW
                 canvas.drawCircle(GoldCoin.coinx.toFloat(), GoldCoin.coiny.toFloat(), 30f, paint)
+
             } else {
                 paint.color = Color.WHITE
                 canvas.drawCircle(GoldCoin.coinx.toFloat(), GoldCoin.coiny.toFloat(), 30f, paint)
