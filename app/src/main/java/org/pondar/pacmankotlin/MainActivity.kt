@@ -93,6 +93,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         } else if (id == R.id.action_newGame) {
             Toast.makeText(this, "New Game clicked", Toast.LENGTH_LONG).show()
             game?.newGame()
+            counter = 0
+            timeView.text = (counter/5).toString()
             return true
         }
         return super.onOptionsItemSelected(item)
@@ -109,7 +111,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             //gameView.reset() //you should call the newGame method instead of this
             game!!.newGame()
             running = false
-            //textView.text = getString(R.string.timerValue,counter)
+
+            timeView.text = (counter/5).toString()
 
         }
     }
