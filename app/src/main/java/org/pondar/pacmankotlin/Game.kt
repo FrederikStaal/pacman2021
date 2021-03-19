@@ -25,12 +25,6 @@ class Game(private var context: Context, view: TextView) {
     var pacx: Int = 0
     var pacy: Int = 0
 
-
-
-
-
-
-
     //did we initialize the coins?
     var coinsInitialized = false
 
@@ -41,7 +35,6 @@ class Game(private var context: Context, view: TextView) {
     private var gameView: GameView? = null
     private var h: Int = 0
     private var w: Int = 0 //height and width of screen
-
 
     //The init code is called when we create a new Game class.
     //it's a good place to initialize our images.
@@ -149,10 +142,8 @@ class Game(private var context: Context, view: TextView) {
         if (points == 50) {
             //newGame()
             Toast.makeText(gameView!!.context, "Congratulations", Toast.LENGTH_SHORT).show();
-
         }
     }
-
 
     private fun updateScore() {
         pointsView.text = "${context.resources.getString(R.string.points)} $points"

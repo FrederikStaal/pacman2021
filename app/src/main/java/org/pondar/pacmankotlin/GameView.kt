@@ -20,14 +20,12 @@ class GameView : View {
         this.game = game
     }
 
-
     /* The next 3 constructors are needed for the Android view system,
 	when we have a custom view.
 	 */
     constructor(context: Context) : super(context)
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
-
 
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
@@ -45,7 +43,6 @@ class GameView : View {
         //if not initizlise them
         if (!(game!!.coinsInitialized))
             game?.initializeGoldcoins()
-
 
         //Making a new paint object
         val paint = Paint()
@@ -67,9 +64,7 @@ class GameView : View {
                 canvas.drawCircle(GoldCoin.coinx.toFloat(), GoldCoin.coiny.toFloat(), 30f, paint)
             }
         }
-
         game?.doCollisionCheck()
         super.onDraw(canvas)
     }
-
 }

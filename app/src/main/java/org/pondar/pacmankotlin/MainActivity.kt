@@ -54,19 +54,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         game?.newGame()
 
         moveLeft.setOnClickListener {
-            //game?.movePacmanLeft(10)
             direction = LEFT
         }
         moveRight.setOnClickListener {
-            //game?.movePacmanRight(10)
             direction = RIGHT
         }
         moveUp.setOnClickListener {
-            //game?.movePacmanUp(10)
             direction = UP
         }
         moveDown.setOnClickListener {
-            //game?.movePacmanDown(10)
             direction = DOWN
         }
     }
@@ -108,12 +104,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             running = false
         } else if (v.id == R.id.resetButton) {
             counter = 0
-            //gameView.reset() //you should call the newGame method instead of this
             game!!.newGame()
             running = false
-
             timeView.text = (counter/5).toString()
-
         }
     }
 
@@ -124,11 +117,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private val timerTick = Runnable {
         if (running) {
             counter++
-
-            val textView = ""
-            //timeView.text = getString(R.string.timerValue, game!!.counter)
             timeView.text = (counter/5).toString()
-
             if (direction == RIGHT) {
                 game!!.movePacmanRight(20)
             }
@@ -141,7 +130,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             else if (direction == UP) {
                 game!!.movePacmanUp(20)
             }
-
         }
     }
 }
