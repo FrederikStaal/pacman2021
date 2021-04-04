@@ -11,8 +11,8 @@ class GoldCoin(x: Int, y: Int) {
 
     init {
         coinx = x
-        maxX = coinx + 10
+        maxX = coinx + 100
         coiny = y
-        maxY = coiny + 10
+        maxY = coiny + 100
     }
 }
