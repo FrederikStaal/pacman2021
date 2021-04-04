@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private val LEFT = 3
     private val UP = 4
 
-    private var counter : Int = 0
+    private var counter : Int = 300
     private var running = false
     private var direction = RIGHT
 
@@ -65,6 +65,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         moveDown.setOnClickListener {
             direction = DOWN
         }
+        //Stop game if counter reaches 0
+        if (counter == 0) {
+            onStop()
+        }
+
+        //var ghost = Ghost(500, 500)
     }
 
     override fun onStop() {
@@ -89,7 +95,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         } else if (id == R.id.action_newGame) {
             Toast.makeText(this, "New Game clicked", Toast.LENGTH_LONG).show()
             game?.newGame()
-            counter = 0
+            counter = 300
             timeView.text = (counter/5).toString()
             return true
         }
@@ -103,7 +109,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         } else if (v.id == R.id.stopButton) {
             running = false
         } else if (v.id == R.id.resetButton) {
-            counter = 0
+            counter = 300
             game!!.newGame()
             running = false
             timeView.text = (counter/5).toString()
@@ -116,19 +122,24 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private val timerTick = Runnable {
         if (running) {
-            counter++
+            counter--
             timeView.text = (counter/5).toString()
+
             if (direction == RIGHT) {
                 game!!.movePacmanRight(20)
+                game!!.moveGhostRight(10)
             }
             else if (direction == DOWN) {
                 game!!.movePacmanDown(20)
+                game!!.moveGhostDown(10)
             }
             else if (direction == LEFT) {
                 game!!.movePacmanLeft(20)
+                game!!.moveGhostLeft(10)
             }
             else if (direction == UP) {
                 game!!.movePacmanUp(20)
+                game!!.moveGhostUp(10)
             }
         }
     }

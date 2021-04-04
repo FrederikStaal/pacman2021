@@ -8,6 +8,7 @@ import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import java.util.ArrayList
+import kotlin.random.Random
 
 
 /**
@@ -31,6 +32,16 @@ class Game(private var context: Context, view: TextView) {
     //the list of goldcoins - initially empty
     var coins = ArrayList<GoldCoin>()
     var coinBitmap: Bitmap
+
+    // Ghost Bitmap
+    var ghostBitmap: Bitmap
+    var ghostX: Int = 0
+    var ghostmaxX: Int = 0
+    var ghostY: Int = 0
+    var ghostmaxY: Int = 0
+    var destGhostX: Int = 0
+    var destGhostY: Int = 0
+
     //a reference to the gameview
     private var gameView: GameView? = null
     private var h: Int = 0
@@ -41,6 +52,7 @@ class Game(private var context: Context, view: TextView) {
     init {
         pacBitmap = BitmapFactory.decodeResource(context.resources, R.drawable.pacman)
         coinBitmap = BitmapFactory.decodeResource(context.resources, R.drawable.coin)
+        ghostBitmap = BitmapFactory.decodeResource(context.resources, R.drawable.ghost)
     }
 
     fun setGameView(view: GameView) {
@@ -71,6 +83,12 @@ class Game(private var context: Context, view: TextView) {
         pacx = 50
         pacy = 400 //just some starting coordinates - you can change this.
         //reset the points
+
+        ghostX = 300
+        ghostmaxX = ghostX + 100
+        ghostY = 300
+        ghostmaxY = ghostY + 100
+
         coins.removeAll(coins)
         coinsInitialized = false
         points = 0
@@ -87,6 +105,7 @@ class Game(private var context: Context, view: TextView) {
     fun movePacmanLeft(pixels: Int) {
         if (pacx - pixels > 0) {
             pacx = pacx - pixels
+            moveGhostLeft(10)
             doCollisionCheck()
             gameView!!.invalidate()
         }
@@ -96,15 +115,16 @@ class Game(private var context: Context, view: TextView) {
         //still within our boundaries?
         if (pacx + pixels + pacBitmap.width < w) {
             pacx = pacx + pixels
+            moveGhostRight(10)
             doCollisionCheck()
             gameView!!.invalidate()
         }
     }
 
-
     fun movePacmanUp(pixels: Int) {
         if (pacy - pixels > 0) {
             pacy = pacy - pixels
+            moveGhostUp(10)
             doCollisionCheck()
             gameView!!.invalidate()
         }
@@ -113,8 +133,34 @@ class Game(private var context: Context, view: TextView) {
     fun movePacmanDown(pixels: Int) {
         if (pacy + pixels + pacBitmap.height < h) {
             pacy = pacy + pixels
+            moveGhostDown(10)
             doCollisionCheck()
             gameView!!.invalidate()
+        }
+    }
+
+    // Ghost movement
+    fun moveGhostUp(pixels: Int) {
+        if (destGhostY - pixels > 0) {
+            destGhostY -= pixels
+        }
+    }
+
+    fun moveGhostDown(pixels: Int) {
+        if (destGhostY + pixels + ghostBitmap.height < h) {
+            destGhostY += pixels
+        }
+    }
+
+    fun moveGhostLeft(pixels: Int) {
+        if (destGhostX - pixels > 0) {
+            destGhostX -= pixels
+        }
+    }
+
+    fun moveGhostRight(pixels: Int) {
+        if (destGhostX + pixels + ghostBitmap.width < w) {
+            destGhostX += pixels
         }
     }
 
@@ -128,20 +174,34 @@ class Game(private var context: Context, view: TextView) {
         var pacCenterY = pacy + pacBitmap.height/2
         var coinMaxX = coinBitmap.width
         var coinMaxY = coinBitmap.height
+        var coinCenterX = coinBitmap.width/2
+        var coinCenterY = coinBitmap.height/2
+        var ghostCenterX = ghostX + ghostBitmap.width/2
+        var ghostCenterY = ghostY + ghostBitmap.height/2
+
+        if (pacCenterX == ghostCenterX || pacCenterY == ghostCenterY) {
+            Toast.makeText(gameView!!.context, "You died - New Game Started", Toast.LENGTH_SHORT).show()
+            newGame()
+        }
 
         for (GoldCoin in coins) {
             if (!GoldCoin.taken) {
                 if (pacCenterX > GoldCoin.coinx && pacCenterX < coinMaxX || pacCenterY > GoldCoin.coiny && pacCenterY < coinMaxY) {
-                    Log.d("Test", "Taken")
                     points += 10
                     GoldCoin.taken = true
                     updateScore()
                 }
+//                if (coinCenterX == pacCenterX || coinCenterY == pacCenterY) {
+//                    points += 10
+//                    GoldCoin.taken = true
+//                    updateScore()
+//                }
+
             }
         }
         if (points == 50) {
             //newGame()
-            Toast.makeText(gameView!!.context, "Congratulations", Toast.LENGTH_SHORT).show();
+            Toast.makeText(gameView!!.context, "Congratulations", Toast.LENGTH_SHORT).show()
         }
     }
 
