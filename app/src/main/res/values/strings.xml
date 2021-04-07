@@ -11,4 +11,5 @@
     <string name="continueLabel">Continue</string>
     <string name="pause">Pause</string>
     <string name="timerValue">Timer:</string>
+    <string name="hiscoreValue">Highscore:</string>
 </resources>

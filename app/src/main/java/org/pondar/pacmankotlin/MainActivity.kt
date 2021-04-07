@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
         }, 0, 200)
 
-        game = Game(this,pointsView)
+        game = Game(this,pointsView, hiscoreView)
 
         //intialize the game view clas and game class
         game?.setGameView(gameView)
@@ -65,12 +65,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         moveDown.setOnClickListener {
             direction = DOWN
         }
-        //Stop game if counter reaches 0
-        if (counter == 0) {
-            onStop()
-        }
-
-        //var ghost = Ghost(500, 500)
     }
 
     override fun onStop() {
@@ -123,6 +117,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private val timerTick = Runnable {
         if (running) {
             counter--
+            //Stop game if counter reaches 0
+            if (counter <= 0) {
+                onStop()
+                game!!.winGame()
+            }
             timeView.text = (counter/5).toString()
 
             if (direction == RIGHT) {

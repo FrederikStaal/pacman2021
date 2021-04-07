@@ -54,26 +54,11 @@ class GameView : View {
                 game?.pacy!!.toFloat(), paint)
 
         //draw the ghost
-        //canvas.drawBitmap(game!!.ghostBitmap, null, RectF(100.toFloat(), 100.toFloat(), 300.toFloat(), 300.toFloat()), paint)
-        //canvas.drawBitmap(game!!.ghostBitmap, null, RectF(game?.ghostX!!.toFloat(), game?.ghostY!!.toFloat(), game?.ghostmaxX!!.toFloat(), game?.ghostmaxY!!.toFloat()), paint)
         canvas.drawBitmap(game!!.ghostBitmap, game?.destGhostX!!.toFloat(), game?.destGhostY!!.toFloat(), paint )
 
         //TODO loop through the list of goldcoins and draw them here
-//        for (GoldCoin in game!!.coins) {
-//            if (!GoldCoin.taken) {
-//                val paint = Paint()
-//                paint.color = Color.YELLOW
-//                canvas.drawCircle(GoldCoin.coinx.toFloat(), GoldCoin.coiny.toFloat(), 30f, paint)
-//
-//            } else {
-//                paint.color = Color.WHITE
-//                canvas.drawCircle(GoldCoin.coinx.toFloat(), GoldCoin.coiny.toFloat(), 30f, paint)
-//            }
-//        }
-
         for (GoldCoin in game!!.coins) {
             if (!GoldCoin.taken) {
-                //canvas.drawBitmap(game!!.coinBitmap, GoldCoin.coinx.toFloat(), GoldCoin.coiny.toFloat(), paint)
                 canvas.drawBitmap(game!!.coinBitmap, null, RectF(GoldCoin.coinx.toFloat(), GoldCoin.coiny.toFloat(), GoldCoin.maxX.toFloat(), GoldCoin.maxY.toFloat()), paint)
             }
         }

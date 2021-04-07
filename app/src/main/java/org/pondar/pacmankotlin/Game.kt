@@ -1,25 +1,19 @@
 package org.pondar.pacmankotlin
 
-import android.app.PendingIntent.getActivity
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import java.util.ArrayList
-import kotlin.random.Random
 
-
-/**
- *
- * This class should contain all your game logic
- */
-
-class Game(private var context: Context, view: TextView) {
+class Game(private var context: Context, view: TextView, private var hiscoreView: TextView) {
 
     private var pointsView: TextView = view
     private var points: Int = 0
+
+    var hiscore: Int = 0
+    private var hiscoreText: String = hiscore.toString()
 
     //bitmap of the pacman
     var pacBitmap: Bitmap
@@ -62,11 +56,7 @@ class Game(private var context: Context, view: TextView) {
     //TODO initialize goldcoins also here
     fun initializeGoldcoins() {
         //DO Stuff to initialize the array list with some coins.
-        coins.add(GoldCoin(getRandomNumberWidth(), getRandomNumberHeight()))
-        coins.add(GoldCoin(getRandomNumberWidth(), getRandomNumberHeight()))
-        coins.add(GoldCoin(getRandomNumberWidth(), getRandomNumberHeight()))
-        coins.add(GoldCoin(getRandomNumberWidth(), getRandomNumberHeight()))
-        coins.add(GoldCoin(getRandomNumberWidth(), getRandomNumberHeight()))
+        generateCoins()
         coinsInitialized = true
     }
 
@@ -78,17 +68,27 @@ class Game(private var context: Context, view: TextView) {
         return ((100..(w - 100)).random())
     }
 
+    private fun generateCoins() {
+        coins.add(GoldCoin(getRandomNumberWidth(), getRandomNumberHeight()))
+        coins.add(GoldCoin(getRandomNumberWidth(), getRandomNumberHeight()))
+        coins.add(GoldCoin(getRandomNumberWidth(), getRandomNumberHeight()))
+        coins.add(GoldCoin(getRandomNumberWidth(), getRandomNumberHeight()))
+        coins.add(GoldCoin(getRandomNumberWidth(), getRandomNumberHeight()))
+        coins.add(GoldCoin(getRandomNumberWidth(), getRandomNumberHeight()))
+        coins.add(GoldCoin(getRandomNumberWidth(), getRandomNumberHeight()))
+        coins.add(GoldCoin(getRandomNumberWidth(), getRandomNumberHeight()))
+        coins.add(GoldCoin(getRandomNumberWidth(), getRandomNumberHeight()))
+        coins.add(GoldCoin(getRandomNumberWidth(), getRandomNumberHeight()))
+    }
+
 
     fun newGame() {
         pacx = 50
-        pacy = 400 //just some starting coordinates - you can change this.
-        //reset the points
-
+        pacy = 400
         ghostX = 300
         ghostmaxX = ghostX + 100
         ghostY = 300
         ghostmaxY = ghostY + 100
-
         coins.removeAll(coins)
         coinsInitialized = false
         points = 0
@@ -174,14 +174,12 @@ class Game(private var context: Context, view: TextView) {
         var pacCenterY = pacy + pacBitmap.height/2
         var coinMaxX = coinBitmap.width
         var coinMaxY = coinBitmap.height
-        var coinCenterX = coinBitmap.width/2
-        var coinCenterY = coinBitmap.height/2
         var ghostCenterX = ghostX + ghostBitmap.width/2
         var ghostCenterY = ghostY + ghostBitmap.height/2
 
         if (pacCenterX == ghostCenterX || pacCenterY == ghostCenterY) {
-            Toast.makeText(gameView!!.context, "You died - New Game Started", Toast.LENGTH_SHORT).show()
-            newGame()
+            Toast.makeText(gameView!!.context, "You died - Start new game", Toast.LENGTH_SHORT).show()
+            updateHiscore()
         }
 
         for (GoldCoin in coins) {
@@ -190,23 +188,27 @@ class Game(private var context: Context, view: TextView) {
                     points += 10
                     GoldCoin.taken = true
                     updateScore()
-                }
-//                if (coinCenterX == pacCenterX || coinCenterY == pacCenterY) {
-//                    points += 10
-//                    GoldCoin.taken = true
-//                    updateScore()
-//                }
 
+                }
             }
-        }
-        if (points == 50) {
-            //newGame()
-            Toast.makeText(gameView!!.context, "Congratulations", Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun updateScore() {
         pointsView.text = "${context.resources.getString(R.string.points)} $points"
+    }
+
+    fun winGame() {
+        if (hiscore < points) {
+            hiscore = points
+            updateHiscore()
+        }
+        Toast.makeText(context, "Time ran out", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun updateHiscore() {
+        hiscoreText = "Hiscore: $hiscore"
+        hiscoreView.text = hiscoreText
     }
 
 
