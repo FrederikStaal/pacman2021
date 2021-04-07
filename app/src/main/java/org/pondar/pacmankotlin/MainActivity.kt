@@ -1,13 +1,11 @@
 package org.pondar.pacmankotlin
 
-import android.annotation.SuppressLint
 import android.content.pm.ActivityInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.TextView
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
@@ -19,7 +17,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     // Timer object
     private var gameTimer: Timer = Timer()
-
     private val RIGHT = 1
     private val DOWN = 2
     private val LEFT = 3
