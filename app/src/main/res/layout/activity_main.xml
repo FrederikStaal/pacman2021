@@ -44,6 +44,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/timerValue" />
+    <TextView
+        android:id="@+id/hiscoreView"
+        android:textSize="24sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hiscoreValue" />
     <!-- Notice how the custom view is referenced here with
     a full package path-->
     <org.pondar.pacmankotlin.GameView
